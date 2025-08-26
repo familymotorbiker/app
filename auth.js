@@ -40,8 +40,13 @@ class AuthManager {
             <div class="auth-container">
                 <div class="auth-card">
                     <div class="auth-header">
-                        <h1><i class="fas fa-motorcycle"></i> Inventario de Llantas</h1>
-                        <p>Inicia sesión para acceder a tu inventario</p>
+                        <h1>
+                            <i class="fas fa-motorcycle"></i>
+                            <span class="brand-text">FAMILY MOTORBIKER</span>
+                            <br>
+                            <small style="font-size: 0.6em; font-weight: 500; letter-spacing: 2px; opacity: 0.8;">INVENTARIO DE LLANTAS</small>
+                        </h1>
+                        <p>Inicia sesión para acceder a tu inventario personalizado</p>
                     </div>
 
                     <div class="auth-tabs">
