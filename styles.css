@@ -562,49 +562,395 @@ body {
     border-top: 1px solid var(--border-color);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .container {
-        padding: 0 0.5rem;
-    }
-    
-    .header h1 {
-        font-size: 1.5rem;
-    }
-    
-    .nav-btn {
-        padding: 0.5rem 1rem;
-        font-size: 0.875rem;
-    }
-    
+/* Responsive Design */
+
+/* Tablet */
+@media (max-width: 1024px) {
     .stats-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
     }
     
     .dashboard-charts {
         grid-template-columns: 1fr;
     }
     
+    .chart-card {
+        min-height: 300px;
+    }
+}
+
+/* Mobile Large (iPhone Plus, etc) */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .header {
+        padding: 1rem 0;
+        margin-bottom: 1rem;
+    }
+    
+    .header h1 {
+        font-size: 1.75rem;
+        margin-bottom: 1rem;
+    }
+    
+    .nav {
+        gap: 0.25rem;
+        padding: 0 0.5rem;
+    }
+    
+    .nav-btn {
+        padding: 0.75rem 1rem;
+        font-size: 0.8rem;
+        flex: 1;
+        justify-content: center;
+        min-width: 0;
+    }
+    
+    .nav-btn span {
+        display: none; /* Ocultar texto en móvil, solo iconos */
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .stat-card {
+        padding: 1rem;
+    }
+    
+    .dashboard-charts {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .chart-card {
+        padding: 1rem;
+    }
+    
     .inventory-header {
         flex-direction: column;
         align-items: stretch;
+        gap: 0.5rem;
     }
     
     .search-filters {
         flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .search-input {
+        min-width: unset;
+    }
+    
+    .filter-select {
+        min-width: unset;
+    }
+    
+    /* Tablas más compactas en móvil */
+    .inventory-table th,
+    .inventory-table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.8rem;
+    }
+    
+    .history-table th,
+    .history-table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.8rem;
+    }
+    
+    .stock-controls {
+        gap: 0.25rem;
+    }
+    
+    .btn-stock {
+        min-width: 1.75rem;
+        height: 1.75rem;
+        font-size: 0.7rem;
+    }
+    
+    .stock-display {
+        font-size: 0.8rem;
+        min-width: 1.5rem;
     }
     
     .form-row {
         grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .movement-form-card {
+        padding: 1rem;
     }
     
     .history-filters {
         flex-direction: column;
+        gap: 0.75rem;
     }
     
     .modal-content {
-        margin: 2% auto;
-        width: 95%;
+        margin: 1rem;
+        width: calc(100% - 2rem);
+        max-height: calc(100vh - 2rem);
+    }
+    
+    .modal-header {
+        padding: 1rem;
+    }
+    
+    .tire-form {
+        padding: 1rem;
+    }
+    
+    .modal-footer {
+        padding: 1rem;
+        flex-direction: column;
+    }
+    
+    .modal-footer .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Mobile Small */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 0.75rem;
+    }
+    
+    .header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .nav {
+        gap: 0.125rem;
+        padding: 0 0.25rem;
+    }
+    
+    .nav-btn {
+        padding: 0.6rem 0.5rem;
+        font-size: 0.75rem;
+        border-radius: 0.375rem;
+    }
+    
+    .stat-card {
+        padding: 0.75rem;
+        gap: 0.75rem;
+    }
+    
+    .stat-card i {
+        font-size: 1.5rem;
+        width: 2.5rem;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
+    }
+    
+    .btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
+    }
+    
+    .btn-small {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.7rem;
+    }
+    
+    /* Ocultar columnas menos importantes en móvil pequeño */
+    .mobile-hide {
+        display: none;
+    }
+    
+    .inventory-table th:nth-child(4), /* Categoria */
+    .inventory-table td:nth-child(4),
+    .inventory-table th:nth-child(5), /* Tipo */
+    .inventory-table td:nth-child(5) {
+        display: none;
+    }
+    
+    .inventory-table th,
+    .inventory-table td {
+        padding: 0.5rem 0.25rem;
+        font-size: 0.75rem;
+    }
+    
+    .history-table th:nth-child(7), /* Razón */
+    .history-table td:nth-child(7) {
+        display: none;
+    }
+    
+    .notification {
+        right: 10px;
+        left: 10px;
+        max-width: none;
+        font-size: 0.8rem;
+    }
+}
+
+/* Landscape orientation optimizations */
+@media (max-width: 768px) and (orientation: landscape) {
+    .modal-content {
+        margin: 0.5rem;
+        width: calc(100% - 1rem);
+        max-height: calc(100vh - 1rem);
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Touch optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .btn {
+        min-height: 44px; /* Minimum touch target */
+    }
+    
+    .nav-btn {
+        min-height: 44px;
+    }
+    
+    .btn-stock {
+        min-height: 40px;
+        min-width: 40px;
+    }
+    
+    .form-group input,
+    .form-group select {
+        min-height: 44px;
+        font-size: 16px; /* Prevent zoom on iOS */
+    }
+    
+    .search-input {
+        font-size: 16px;
+    }
+    
+    .filter-select {
+        font-size: 16px;
+    }
+}
+
+/* PWA and Mobile Specific Optimizations */
+@supports (-webkit-touch-callout: none) {
+    /* iOS Safari specific styles */
+    body {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    .btn, .nav-btn {
+        -webkit-tap-highlight-color: rgba(37, 99, 235, 0.1);
+    }
+}
+
+/* Prevent horizontal scroll on small screens */
+body {
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+/* Improved table scrolling on mobile */
+.inventory-table-container,
+.history-table-container {
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) transparent;
+}
+
+.inventory-table-container::-webkit-scrollbar,
+.history-table-container::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+}
+
+.inventory-table-container::-webkit-scrollbar-track,
+.history-table-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.inventory-table-container::-webkit-scrollbar-thumb,
+.history-table-container::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 3px;
+}
+
+/* Mobile keyboard optimization */
+@media (max-width: 768px) {
+    .modal.keyboard-open {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+    
+    .modal.keyboard-open .modal-content {
+        margin: 0;
+        width: 100%;
+        max-height: 100vh;
+        border-radius: 0;
+    }
+}
+
+/* Loading states for mobile */
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.btn.loading {
+    position: relative;
+    color: transparent;
+}
+
+.btn.loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+/* Swipe gestures hint */
+@media (max-width: 768px) {
+    .table-swipe-hint {
+        text-align: center;
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        padding: 0.5rem;
+        background: var(--background-color);
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .table-swipe-hint i {
+        margin-right: 0.25rem;
     }
 }
 
