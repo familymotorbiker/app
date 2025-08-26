@@ -140,15 +140,14 @@ class AuthManager {
         this.addLogoutButton();
         
         // Inicializar la app principal
-        if (window.app) {
-            window.app.init();
+        if (window.initTireInventoryApp) {
+            window.initTireInventoryApp();
         }
     }
 
     loadOriginalApp() {
-        // Aquí cargarías el HTML original de la app
-        // Por simplicidad, vamos a recargar la página
-        if (this.isAuthenticated && !document.querySelector('.container')) {
+        // Si estamos en la página de auth, recargar para mostrar la app
+        if (document.querySelector('.auth-container')) {
             window.location.reload();
         }
     }

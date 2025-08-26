@@ -21,15 +21,8 @@ class TireInventoryApp {
                 // Solo inicializar si el usuario está autenticado
                 if (this.authManager.isAuthenticated) {
                     this.init();
-                } else {
-                    // Escuchar cambios de autenticación
-                    window.auth.onAuthStateChange((event, session) => {
-                        if (event === 'SIGNED_IN' && session && !this.initialized) {
-                            this.initialized = true;
-                            this.init();
-                        }
-                    });
                 }
+                // Si no está autenticado, el AuthManager ya se encarga de mostrar login
             } else {
                 // Retry después de 100ms
                 setTimeout(checkAuth, 100);
@@ -847,8 +840,16 @@ class TireInventoryApp {
     }
 }
 
-// Inicializar la aplicación cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', async () => {
-    const app = new TireInventoryApp();
-    window.app = app; // Hacer accesible globalmente para los onclick
-});
+// NO inicializar automáticamente - la autenticación se encarga
+// document.addEventListener('DOMContentLoaded', async () => {
+//     const app = new TireInventoryApp();
+//     window.app = app; // Hacer accesible globalmente para los onclick
+// });
+
+// Función para inicializar la app desde auth.js
+window.initTireInventoryApp = function() {
+    if (!window.app) {
+        const app = new TireInventoryApp();
+        window.app = app;
+    }
+};
