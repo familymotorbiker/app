@@ -1,0 +1,18 @@
+{
+  "name": "tires-app",
+  "version": "1.0.0",
+  "description": "Sistema de gestión de inventario para llantas de moto desarrollado con HTML, CSS y JavaScript puro.",
+  "main": "script.js",
+  "scripts": {
+    "start": "python3 server.py",
+    "dev": "python3 server.py",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.56.0"
+  }
+}

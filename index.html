@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario de Llantas - MVP</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-motorcycle"></i> Inventario de Llantas</h1>
+            <nav class="nav">
+                <button class="nav-btn active" data-tab="dashboard">
+                    <i class="fas fa-chart-bar"></i> Dashboard
+                </button>
+                <button class="nav-btn" data-tab="inventory">
+                    <i class="fas fa-boxes"></i> Inventario
+                </button>
+                <button class="nav-btn" data-tab="movements">
+                    <i class="fas fa-exchange-alt"></i> Movimientos
+                </button>
+                <button class="nav-btn" data-tab="history">
+                    <i class="fas fa-history"></i> Historial
+                </button>
+            </nav>
+        </header>
+
+        <main class="main">
+            <!-- Dashboard Tab -->
+            <section id="dashboard" class="tab-content active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-boxes"></i>
+                        <div class="stat-info">
+                            <h3>Total Llantas</h3>
+                            <span class="stat-number" id="totalTires">0</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-dollar-sign"></i>
+                        <div class="stat-info">
+                            <h3>Valor Inventario</h3>
+                            <span class="stat-number" id="totalValue">$0</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-chart-line"></i>
+                        <div class="stat-info">
+                            <h3>Movimientos Hoy</h3>
+                            <span class="stat-number" id="todayMovements">0</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div class="stat-info">
+                            <h3>Stock Bajo</h3>
+                            <span class="stat-number" id="lowStock">0</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-charts">
+                    <div class="chart-card">
+                        <h3>Llantas por Categoría</h3>
+                        <div id="categoryChart" class="chart"></div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Stock por Marca</h3>
+                        <div id="brandChart" class="chart"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Inventory Tab -->
+            <section id="inventory" class="tab-content">
+                <div class="inventory-header">
+                    <h2>Gestión de Inventario</h2>
+                    <button class="btn btn-primary" id="addTireBtn">
+                        <i class="fas fa-plus"></i> Agregar Llanta
+                    </button>
+                </div>
+
+                <div class="search-filters">
+                    <input type="text" id="searchInput" placeholder="Buscar por marca, referencia..." class="search-input">
+                    <select id="categoryFilter" class="filter-select">
+                        <option value="">Todas las categorías</option>
+                        <option value="Deportiva">Deportiva</option>
+                        <option value="Touring">Touring</option>
+                        <option value="Trail">Trail</option>
+                        <option value="Urbana">Urbana</option>
+                    </select>
+                    <select id="typeFilter" class="filter-select">
+                        <option value="">Todos los tipos</option>
+                        <option value="Delantera">Delantera</option>
+                        <option value="Trasera">Trasera</option>
+                    </select>
+                </div>
+
+                <div class="inventory-table-container">
+                    <table class="inventory-table" id="inventoryTable">
+                        <thead>
+                            <tr>
+                                <th>Medida</th>
+                                <th>Marca</th>
+                                <th>Referencia</th>
+                                <th>Categoría</th>
+                                <th>Tipo</th>
+                                <th>Stock</th>
+                                <th>Precio</th>
+                                <th>Ajuste Rápido</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventoryTableBody">
+                            <!-- Los datos se cargarán dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Movements Tab -->
+            <section id="movements" class="tab-content">
+                <div class="movements-header">
+                    <h2>Registrar Movimiento</h2>
+                </div>
+
+                <div class="movement-form-card">
+                    <form id="movementForm" class="movement-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="movementTire">Llanta</label>
+                                <select id="movementTire" required>
+                                    <option value="">Seleccionar llanta...</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="movementType">Tipo de Movimiento</label>
+                                <select id="movementType" required>
+                                    <option value="">Seleccionar...</option>
+                                    <option value="entrada">Entrada (Compra)</option>
+                                    <option value="salida">Salida (Venta)</option>
+                                    <option value="transferencia">Transferencia</option>
+                                    <option value="ajuste">Ajuste de Inventario</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="movementQuantity">Cantidad</label>
+                                <input type="number" id="movementQuantity" min="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="movementReason">Motivo/Observaciones</label>
+                                <input type="text" id="movementReason" placeholder="Motivo del movimiento">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Registrar Movimiento
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- History Tab -->
+            <section id="history" class="tab-content">
+                <div class="history-header">
+                    <h2>Historial de Movimientos</h2>
+                    <div class="history-filters">
+                        <input type="date" id="startDate" class="date-input">
+                        <input type="date" id="endDate" class="date-input">
+                        <select id="historyTypeFilter" class="filter-select">
+                            <option value="">Todos los movimientos</option>
+                            <option value="entrada">Entradas</option>
+                            <option value="salida">Salidas</option>
+                            <option value="transferencia">Transferencias</option>
+                            <option value="ajuste">Ajustes</option>
+                        </select>
+                        <button class="btn btn-secondary" id="filterHistoryBtn">Filtrar</button>
+                    </div>
+                </div>
+
+                <div class="history-table-container">
+                    <table class="history-table" id="historyTable">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Llanta</th>
+                                <th>Tipo</th>
+                                <th>Cantidad</th>
+                                <th>Stock Anterior</th>
+                                <th>Stock Nuevo</th>
+                                <th>Motivo</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody">
+                            <!-- Los datos se cargarán dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal para agregar/editar llanta -->
+    <div id="tireModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Agregar Nueva Llanta</h3>
+                <span class="close">&times;</span>
+            </div>
+            <form id="tireForm" class="tire-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tireMeasure">Medida *</label>
+                        <input type="text" id="tireMeasure" required placeholder="ej: 120/70-17">
+                    </div>
+                    <div class="form-group">
+                        <label for="tireBrand">Marca *</label>
+                        <input type="text" id="tireBrand" required placeholder="ej: Michelin">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tireReference">Referencia *</label>
+                        <input type="text" id="tireReference" required placeholder="ej: Pilot Street">
+                    </div>
+                    <div class="form-group">
+                        <label for="tireCategory">Categoría *</label>
+                        <select id="tireCategory" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="Deportiva">Deportiva</option>
+                            <option value="Touring">Touring</option>
+                            <option value="Trail">Trail</option>
+                            <option value="Urbana">Urbana</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tireType">Tipo *</label>
+                        <select id="tireType" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="Delantera">Delantera</option>
+                            <option value="Trasera">Trasera</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tirePrice">Precio *</label>
+                        <input type="number" id="tirePrice" required min="0" step="0.01" placeholder="0.00">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tireStock">Stock Inicial</label>
+                        <input type="number" id="tireStock" min="0" value="0" placeholder="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="tireMinStock">Stock Mínimo</label>
+                        <input type="number" id="tireMinStock" min="0" value="5" placeholder="5">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelBtn">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> <span id="saveButtonText">Guardar</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="supabase-config.js"></script>
+    <script type="module" src="script.js"></script>
+</body>
+</html>
