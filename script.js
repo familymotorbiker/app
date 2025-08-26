@@ -6,8 +6,37 @@ class TireInventoryApp {
         this.currentEditingTire = null;
         this.isOnline = true;
         this.supabaseReady = false;
+        this.authManager = null;
         
-        this.init();
+        // No inicializar inmediatamente, esperar a la autenticación
+        this.waitForAuth();
+    }
+
+    waitForAuth() {
+        // Esperar a que el auth manager esté disponible
+        const checkAuth = () => {
+            if (window.authManager) {
+                this.authManager = window.authManager;
+                
+                // Solo inicializar si el usuario está autenticado
+                if (this.authManager.isAuthenticated) {
+                    this.init();
+                } else {
+                    // Escuchar cambios de autenticación
+                    window.auth.onAuthStateChange((event, session) => {
+                        if (event === 'SIGNED_IN' && session && !this.initialized) {
+                            this.initialized = true;
+                            this.init();
+                        }
+                    });
+                }
+            } else {
+                // Retry después de 100ms
+                setTimeout(checkAuth, 100);
+            }
+        };
+        
+        checkAuth();
     }
 
     async init() {
@@ -244,6 +273,7 @@ class TireInventoryApp {
 
     async createTire(tireData) {
         if (this.supabaseReady) {
+            // Agregar user_id automáticamente (el trigger de la DB se encargará)
             const { data, error } = await window.supabase
                 .from('tires')
                 .insert([tireData])

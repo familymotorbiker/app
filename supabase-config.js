@@ -26,6 +26,62 @@ async function testConnection() {
     }
 }
 
+// Funciones de autenticación
+const auth = {
+    // Registrar usuario
+    async signUp(email, password) {
+        const { data, error } = await supabase.auth.signUp({
+            email: email,
+            password: password
+        });
+        return { data, error };
+    },
+
+    // Iniciar sesión
+    async signIn(email, password) {
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
+        return { data, error };
+    },
+
+    // Iniciar sesión con Google
+    async signInWithGoogle() {
+        const { data, error } = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+                redirectTo: window.location.origin
+            }
+        });
+        return { data, error };
+    },
+
+    // Cerrar sesión
+    async signOut() {
+        const { error } = await supabase.auth.signOut();
+        return { error };
+    },
+
+    // Obtener usuario actual
+    async getCurrentUser() {
+        const { data: { user } } = await supabase.auth.getUser();
+        return user;
+    },
+
+    // Obtener sesión actual
+    async getSession() {
+        const { data: { session } } = await supabase.auth.getSession();
+        return session;
+    },
+
+    // Escuchar cambios de autenticación
+    onAuthStateChange(callback) {
+        return supabase.auth.onAuthStateChange(callback);
+    }
+};
+
 // Exportar para usar en otros archivos
 window.supabase = supabase;
+window.auth = auth;
 window.testConnection = testConnection;
