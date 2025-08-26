@@ -1,0 +1,56 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Círculo exterior negro -->
+  <circle cx="60" cy="60" r="58" fill="#1A1A1A" stroke="#FFFFFF" stroke-width="2"/>
+  
+  <!-- Triángulo rojo central -->
+  <path d="M60 25 L85 70 L35 70 Z" fill="#DC2626"/>
+  
+  <!-- Banderas a cuadros (izquierda) -->
+  <g transform="translate(20, 45)">
+    <!-- Asta de bandera -->
+    <rect x="0" y="0" width="2" height="25" fill="#FFFFFF"/>
+    <!-- Bandera con patrón -->
+    <rect x="2" y="0" width="20" height="12" fill="#FFFFFF"/>
+    <rect x="2" y="0" width="5" height="3" fill="#000000"/>
+    <rect x="7" y="3" width="5" height="3" fill="#000000"/>
+    <rect x="12" y="0" width="5" height="3" fill="#000000"/>
+    <rect x="17" y="3" width="5" height="3" fill="#000000"/>
+    <rect x="2" y="6" width="5" height="3" fill="#000000"/>
+    <rect x="7" y="9" width="5" height="3" fill="#000000"/>
+    <rect x="12" y="6" width="5" height="3" fill="#000000"/>
+    <rect x="17" y="9" width="5" height="3" fill="#000000"/>
+  </g>
+  
+  <!-- Banderas a cuadros (derecha) -->
+  <g transform="translate(78, 45)">
+    <!-- Asta de bandera -->
+    <rect x="20" y="0" width="2" height="25" fill="#FFFFFF"/>
+    <!-- Bandera con patrón -->
+    <rect x="0" y="0" width="20" height="12" fill="#FFFFFF"/>
+    <rect x="0" y="0" width="5" height="3" fill="#000000"/>
+    <rect x="5" y="3" width="5" height="3" fill="#000000"/>
+    <rect x="10" y="0" width="5" height="3" fill="#000000"/>
+    <rect x="15" y="3" width="5" height="3" fill="#000000"/>
+    <rect x="0" y="6" width="5" height="3" fill="#000000"/>
+    <rect x="5" y="9" width="5" height="3" fill="#000000"/>
+    <rect x="10" y="6" width="5" height="3" fill="#000000"/>
+    <rect x="15" y="9" width="5" height="3" fill="#000000"/>
+  </g>
+  
+  <!-- Texto FAMILY (superior) -->
+  <text x="60" y="20" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black, sans-serif" font-size="10" font-weight="900" letter-spacing="1px">FAMILY</text>
+  
+  <!-- Texto MOTORBIKER (inferior) -->
+  <text x="60" y="105" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black, sans-serif" font-size="9" font-weight="900" letter-spacing="1px">MOTORBIKER</text>
+  
+  <!-- Banner SINCE 2017 -->
+  <g transform="translate(25, 85)">
+    <rect x="0" y="0" width="70" height="8" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="1"/>
+    <text x="35" y="6" text-anchor="middle" fill="#1A1A1A" font-family="Arial, sans-serif" font-size="5" font-weight="700">SINCE 2017</text>
+  </g>
+  
+  <!-- Decoración adicional en el triángulo -->
+  <circle cx="60" cy="50" r="8" fill="#FFFFFF"/>
+  <circle cx="60" cy="50" r="6" fill="#DC2626"/>
+  <text x="60" y="54" text-anchor="middle" fill="#FFFFFF" font-family="Arial Black, sans-serif" font-size="6" font-weight="900">FM</text>
+</svg>

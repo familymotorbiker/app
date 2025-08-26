@@ -40,8 +40,10 @@ class AuthManager {
             <div class="auth-container">
                 <div class="auth-card">
                     <div class="auth-header">
+                        <div class="auth-logo">
+                            <img src="assets/images/family-motorbiker-logo.svg" alt="Family Motorbiker Logo" class="logo-image">
+                        </div>
                         <h1>
-                            <i class="fas fa-motorcycle"></i>
                             <span class="brand-text">FAMILY MOTORBIKER</span>
                             <br>
                             <small style="font-size: 0.6em; font-weight: 500; letter-spacing: 2px; opacity: 0.8;">INVENTARIO DE LLANTAS</small>
@@ -128,7 +130,7 @@ class AuthManager {
                     </div>
 
                     <div class="auth-footer">
-                        <p><i class="fas fa-shield-alt"></i> Tus datos están protegidos con Supabase</p>
+                        <p><i class="fas fa-motorcycle"></i> Family Motorbiker - Seguridad Total</p>
                     </div>
                 </div>
             </div>
