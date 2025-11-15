@@ -7,31 +7,60 @@ class AuthManager {
     }
 
     async init() {
-        // Verificar si hay una sesión activa
-        const session = await window.auth.getSession();
-        if (session) {
-            this.currentUser = session.user;
-            this.isAuthenticated = true;
-            this.showApp();
-        } else {
-            this.showLogin();
-        }
-
-        // Escuchar cambios de autenticación
-        window.auth.onAuthStateChange((event, session) => {
-            console.log('Auth state changed:', event);
-            
-            if (event === 'SIGNED_IN' && session) {
+        // Esperar a que window.auth esté disponible
+        await this.waitForAuth();
+        
+        try {
+            // Verificar si hay una sesión activa
+            const session = await window.auth.getSession();
+            if (session) {
                 this.currentUser = session.user;
                 this.isAuthenticated = true;
                 this.showApp();
-                this.showNotification('¡Bienvenido! Sesión iniciada correctamente', 'success');
-            } else if (event === 'SIGNED_OUT') {
-                this.currentUser = null;
-                this.isAuthenticated = false;
+            } else {
                 this.showLogin();
-                this.showNotification('Sesión cerrada', 'info');
             }
+
+            // Escuchar cambios de autenticación
+            window.auth.onAuthStateChange((event, session) => {
+                console.log('Auth state changed:', event);
+                
+                if (event === 'SIGNED_IN' && session) {
+                    this.currentUser = session.user;
+                    this.isAuthenticated = true;
+                    this.showApp();
+                    this.showNotification('¡Bienvenido! Sesión iniciada correctamente', 'success');
+                } else if (event === 'SIGNED_OUT') {
+                    this.currentUser = null;
+                    this.isAuthenticated = false;
+                    this.showLogin();
+                    this.showNotification('Sesión cerrada', 'info');
+                }
+            });
+        } catch (error) {
+            console.log('Supabase no disponible, mostrando login directo');
+            this.showLogin();
+        }
+    }
+
+    async waitForAuth() {
+        // Esperar a que window.auth esté disponible, con timeout
+        return new Promise((resolve) => {
+            let attempts = 0;
+            const maxAttempts = 50; // 5 segundos máximo
+            
+            const checkAuth = () => {
+                attempts++;
+                if (window.auth) {
+                    resolve();
+                } else if (attempts >= maxAttempts) {
+                    console.log('Timeout esperando window.auth, continuando sin Supabase');
+                    resolve();
+                } else {
+                    setTimeout(checkAuth, 100);
+                }
+            };
+            checkAuth();
         });
     }
 
