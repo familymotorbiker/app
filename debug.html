@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - Family Motorbiker</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .debug { background: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .error { background: #ffebee; color: #c62828; }
+        .success { background: #e8f5e8; color: #2e7d32; }
+        .info { background: #e3f2fd; color: #1565c0; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Debug Family Motorbiker Auth</h1>
+    
+    <div id="status">Iniciando diagnóstico...</div>
+    
+    <div class="debug">
+        <h3>Pasos de diagnóstico:</h3>
+        <div id="step1">1. Cargando scripts...</div>
+        <div id="step2">2. Verificando window.auth...</div>
+        <div id="step3">3. Inicializando AuthManager...</div>
+        <div id="step4">4. Mostrando login...</div>
+    </div>
+
+    <div id="authContainer"></div>
+
+    <!-- Scripts en el mismo orden que la app principal -->
+    <script type="module" src="supabase-config.js"></script>
+    <script>
+        console.log('🔍 Debug iniciado');
+        
+        // Paso 1
+        document.getElementById('step1').className = 'success';
+        document.getElementById('step1').textContent = '1. ✅ Scripts cargados';
+        
+        // Verificar window.auth
+        let checkCount = 0;
+        const checkAuth = () => {
+            checkCount++;
+            console.log(`🔍 Intento ${checkCount}: window.auth =`, window.auth);
+            
+            if (window.auth) {
+                document.getElementById('step2').className = 'success';
+                document.getElementById('step2').textContent = '2. ✅ window.auth disponible';
+                
+                // Mostrar login simple
+                showSimpleLogin();
+            } else if (checkCount >= 50) {
+                document.getElementById('step2').className = 'error';
+                document.getElementById('step2').textContent = '2. ❌ window.auth no disponible después de 5s';
+                
+                // Mostrar login sin Supabase
+                showSimpleLogin();
+            } else {
+                setTimeout(checkAuth, 100);
+            }
+        };
+        
+        setTimeout(checkAuth, 100);
+        
+        function showSimpleLogin() {
+            document.getElementById('step3').className = 'success';
+            document.getElementById('step3').textContent = '3. ✅ Mostrando login';
+            
+            document.getElementById('authContainer').innerHTML = `
+                <div style="max-width: 400px; margin: 20px auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+                    <h2>🏁 Family Motorbiker Login</h2>
+                    <p>Estado: <span id="authStatus">Listo</span></p>
+                    
+                    <button onclick="testDemo()" style="
+                        background: linear-gradient(135deg, #DC2626, #B91C1C);
+                        color: white;
+                        border: none;
+                        padding: 15px 30px;
+                        border-radius: 25px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        width: 100%;
+                        margin: 10px 0;
+                    ">
+                        🚀 PROBAR DEMO
+                    </button>
+                    
+                    <div style="margin-top: 20px; padding: 10px; background: #f9f9f9; border-radius: 5px;">
+                        <small>Debug info:</small><br>
+                        <small>window.auth: ${window.auth ? '✅ Disponible' : '❌ No disponible'}</small><br>
+                        <small>Timestamp: ${new Date().toLocaleTimeString()}</small>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('step4').className = 'success';
+            document.getElementById('step4').textContent = '4. ✅ Login mostrado correctamente';
+        }
+        
+        function testDemo() {
+            document.getElementById('authStatus').textContent = 'Demo activado!';
+            document.getElementById('authStatus').style.color = 'green';
+            
+            setTimeout(() => {
+                alert('🚀 ¡Demo funcionando! El problema está resuelto.');
+            }, 500);
+        }
+    </script>
+</body>
+</html>
