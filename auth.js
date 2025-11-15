@@ -129,6 +129,14 @@ class AuthManager {
                         </button>
                     </div>
 
+                    <div class="auth-divider">
+                        <span>o</span>
+                    </div>
+
+                    <button id="demoBtn" class="btn btn-demo btn-full">
+                        <i class="fas fa-rocket"></i> Probar Demo (Sin registro)
+                    </button>
+
                     <div class="auth-footer">
                         <p><i class="fas fa-motorcycle"></i> Family Motorbiker - Seguridad Total</p>
                     </div>
@@ -209,6 +217,11 @@ class AuthManager {
 
         document.getElementById('googleSignUpBtn').addEventListener('click', () => {
             this.handleGoogleLogin();
+        });
+
+        // Demo button
+        document.getElementById('demoBtn').addEventListener('click', () => {
+            this.handleDemoLogin();
         });
     }
 
@@ -292,6 +305,24 @@ class AuthManager {
             console.error('Error de Google login:', error);
             this.showNotification('Error al iniciar sesión con Google', 'error');
         }
+    }
+
+    handleDemoLogin() {
+        // Simular usuario demo
+        this.currentUser = {
+            id: 'demo-user',
+            email: 'demo@familymotorbiker.com',
+            user_metadata: {
+                full_name: 'Usuario Demo'
+            }
+        };
+        this.isAuthenticated = true;
+        
+        // Mostrar notificación
+        this.showNotification('¡Bienvenido al modo demo! 🚀', 'success');
+        
+        // Ir a la app
+        this.showApp();
     }
 
     async logout() {

@@ -45,6 +45,16 @@ class TireInventoryApp {
 
     async initializeSupabase() {
         try {
+            // Verificar si estamos en modo demo
+            if (this.authManager && this.authManager.currentUser && this.authManager.currentUser.id === 'demo-user') {
+                console.log('🚀 Modo demo activado');
+                this.supabaseReady = false;
+                this.isOnline = false;
+                this.loadDemoData();
+                this.showNotification('Modo demo - Datos de ejemplo cargados', 'success');
+                return;
+            }
+
             if (typeof window.supabase !== 'undefined') {
                 // Probar conexión
                 const { data, error } = await window.supabase.from('tires').select('count');
@@ -107,6 +117,99 @@ class TireInventoryApp {
         this.tires = JSON.parse(localStorage.getItem('tires')) || [];
         this.movements = JSON.parse(localStorage.getItem('movements')) || [];
         console.log(`📱 Cargados ${this.tires.length} llantas y ${this.movements.length} movimientos desde localStorage`);
+    }
+
+    loadDemoData() {
+        // Datos de ejemplo para el modo demo
+        this.tires = [
+            {
+                id: 'demo-1',
+                measure: '120/70-17',
+                brand: 'Michelin',
+                reference: 'Pilot Street',
+                category: 'Deportiva',
+                type: 'Delantera',
+                price: 180000,
+                stock: 15,
+                minStock: 5,
+                created_at: new Date().toISOString()
+            },
+            {
+                id: 'demo-2',
+                measure: '160/60-17',
+                brand: 'Michelin',
+                reference: 'Pilot Street',
+                category: 'Deportiva',
+                type: 'Trasera',
+                price: 220000,
+                stock: 12,
+                minStock: 5,
+                created_at: new Date().toISOString()
+            },
+            {
+                id: 'demo-3',
+                measure: '110/70-17',
+                brand: 'Pirelli',
+                reference: 'MT60',
+                category: 'Trail',
+                type: 'Delantera',
+                price: 160000,
+                stock: 3,
+                minStock: 5,
+                created_at: new Date().toISOString()
+            },
+            {
+                id: 'demo-4',
+                measure: '140/80-17',
+                brand: 'Pirelli',
+                reference: 'MT60',
+                category: 'Trail',
+                type: 'Trasera',
+                price: 180000,
+                stock: 10,
+                minStock: 5,
+                created_at: new Date().toISOString()
+            },
+            {
+                id: 'demo-5',
+                measure: '100/90-19',
+                brand: 'Dunlop',
+                reference: 'D606',
+                category: 'Trail',
+                type: 'Delantera',
+                price: 150000,
+                stock: 6,
+                minStock: 5,
+                created_at: new Date().toISOString()
+            }
+        ];
+
+        this.movements = [
+            {
+                id: 'demo-mov-1',
+                tireId: 'demo-1',
+                tireName: 'Michelin Pilot Street 120/70-17',
+                type: 'entrada',
+                quantity: 15,
+                oldStock: 0,
+                newStock: 15,
+                reason: 'Stock inicial demo',
+                date: new Date().toISOString()
+            },
+            {
+                id: 'demo-mov-2',
+                tireId: 'demo-3',
+                tireName: 'Pirelli MT60 110/70-17',
+                type: 'salida',
+                quantity: 2,
+                oldStock: 5,
+                newStock: 3,
+                reason: 'Venta demo',
+                date: new Date(Date.now() - 86400000).toISOString() // Ayer
+            }
+        ];
+
+        console.log('🚀 Datos demo cargados: 5 llantas, 2 movimientos');
     }
 
     setupEventListeners() {
